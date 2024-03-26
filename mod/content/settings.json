@@ -1,0 +1,11 @@
+{
+    "settings": [
+        {
+            "id": "KeySingleTick",
+            "tabid": "UI_KEYBINDS",
+            "hint": "UI_OPT_KEYSINGLETICK",
+		    "datatype": "String",
+		    "defaultvalue": "<Keyboard>/Period"
+        }
+    ]
+}

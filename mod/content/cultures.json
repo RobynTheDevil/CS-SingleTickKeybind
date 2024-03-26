@@ -1,0 +1,10 @@
+{
+  "cultures": [
+    {
+      "id": "en",
+      "uilabels$add": {
+        "UI_OPT_KEYSINGLETICK": "Skip One Tick (0.01s)",
+      }
+    }
+  ]
+}
