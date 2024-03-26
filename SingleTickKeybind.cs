@@ -23,7 +23,7 @@ public class SingleTickKeybind : MonoBehaviour
     {
         bool inputEnabled = !Watchman.Get<LocalNexus>().PlayerInputDisabled();
         if (inputEnabled) {
-            if (SingleTickKeybind.keyTick.wasPressedThisFrame())
+            if (SingleTickKeybind.keyTick.wasPressedThisFrame)
             {
                 NoonUtility.Log("SingleTickKeybind: Skip");
                 Watchman.Get<Heart>().Beat(0.015625f, 0.5f);
@@ -38,7 +38,6 @@ public class SingleTickKeybind : MonoBehaviour
         try
         {
             SingleTickKeybind.keyTick = new KeybindTracker("KeySingleTick");
-            SingleTickKeybind.keyTick.Start();
         }
         catch (Exception ex)
         {
