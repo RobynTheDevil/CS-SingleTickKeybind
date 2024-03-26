@@ -15,23 +15,22 @@ public class SingleTickKeybind : MonoBehaviour
         NoonUtility.Log("SingleTickKeybind: Initialised");
 	}
 
-    public void Start() => SceneManager.sceneLoaded += Awake;
+    public void Start() => SceneManager.sceneLoaded += Load;
 
-    public void OnDestroy() => SceneManager.sceneLoaded -= Awake;
+    public void OnDestroy() => SceneManager.sceneLoaded -= Load;
 
     public void Update()
     {
-        bool inputEnabled = !Watchman.Get<LocalNexus>().PlayerInputDisabled();
-        if (inputEnabled) {
-            if (SingleTickKeybind.keyTick.wasPressedThisFrame)
-            {
-                NoonUtility.Log("SingleTickKeybind: Skip");
-                Watchman.Get<Heart>().Beat(0.015625f, 0.5f);
-            }
+        if (Watchman.Get<LocalNexus>() == null || Watchman.Get<LocalNexus>().PlayerInputDisabled())
+            return;
+        if (SingleTickKeybind.keyTick.wasPressedThisFrame())
+        {
+            NoonUtility.Log("SingleTickKeybind: Skip");
+            Watchman.Get<Heart>().Beat(0.015625f, 0.5f);
         }
     }
 
-    private void Awake(Scene scene, LoadSceneMode mode)
+    private void Load(Scene scene, LoadSceneMode mode)
     {
         if (!(scene.name == "S3Menu"))
           return;
