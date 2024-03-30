@@ -7,6 +7,7 @@ using SecretHistories.UI;
 
 public class SingleTickKeybind : MonoBehaviour
 {
+    public static bool started = false;
     public static KeybindTracker keyTick;
 
     public static void Initialise()
@@ -19,6 +20,25 @@ public class SingleTickKeybind : MonoBehaviour
 
     public void OnDestroy() => SceneManager.sceneLoaded -= Load;
 
+    public void Load(Scene scene, LoadSceneMode mode)
+    {
+        try
+        {
+            if (!started) {
+                keyTick = new KeybindTracker("KeySingleTick");
+                started = true;
+            } else {
+                keyTick.Subscribe();
+            }
+        }
+        catch (Exception ex)
+        {
+          NoonUtility.LogException(ex);
+        }
+        NoonUtility.Log("SingleTickKeybind: Trackers Started");
+    }
+
+
     public void Update()
     {
         if (Watchman.Get<LocalNexus>() == null || Watchman.Get<LocalNexus>().PlayerInputDisabled())
@@ -28,21 +48,6 @@ public class SingleTickKeybind : MonoBehaviour
             NoonUtility.Log("SingleTickKeybind: Skip");
             Watchman.Get<Heart>().Beat(0.015625f, 0.5f);
         }
-    }
-
-    private void Load(Scene scene, LoadSceneMode mode)
-    {
-        if (!(scene.name == "S3Menu"))
-          return;
-        try
-        {
-            keyTick = new KeybindTracker("KeySingleTick");
-        }
-        catch (Exception ex)
-        {
-          NoonUtility.LogException(ex);
-        }
-        NoonUtility.Log("SingleTickKeybind: Trackers Started");
     }
 
 }
